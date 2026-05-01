@@ -1,0 +1,13 @@
+{
+  "name": "halaleats/halaleats",
+  "description": "Community-verified halal restaurant map",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.0",
+    "ext-mysqli": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-fileinfo": "*"
+  }
+}
