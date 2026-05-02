@@ -6,11 +6,11 @@ if (PHP_VERSION_ID < 80000) {
     exit("HalalEats requires PHP 8.0 or higher. Current: " . PHP_VERSION);
 }
 
-$rsdomain = "http://www.halaleats.com/";
+$rsdomain = "https://yourdomain.com/halaleats/";
 $host = "localhost";
-$username = "root";
+$username = "DB_USER_HERE";
 $passwd = "YOUR_PASSWORD_HERE";
-$dbname = "halaleats";
+$dbname = "DB_NAME_HERE";
 
 mysqli_report(MYSQLI_REPORT_OFF);
 $conn = @mysqli_connect($host, $username, $passwd, $dbname);

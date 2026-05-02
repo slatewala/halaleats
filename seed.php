@@ -1,6 +1,17 @@
 <?php
 declare(strict_types=1);
-// Run once: php seed.php  (or visit /seed.php)
+// Run once: php seed.php  (CLI) OR visit /seed.php?token=SETUP_SECRET
+// CHANGE THIS TOKEN before deploying, then delete seed.php after first run.
+const SEED_TOKEN = 'CHANGE_ME_BEFORE_DEPLOY';
+
+if (PHP_SAPI !== 'cli') {
+    if (($_GET['token'] ?? '') !== SEED_TOKEN || SEED_TOKEN === 'CHANGE_ME_BEFORE_DEPLOY') {
+        http_response_code(403);
+        exit("Forbidden. Set SEED_TOKEN constant and pass ?token= to run.");
+    }
+    header('Content-Type: text/plain');
+}
+
 require_once __DIR__ . '/db_connect.php';
 
 // Tables
