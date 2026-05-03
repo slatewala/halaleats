@@ -1,6 +1,23 @@
 # HalalEats Data Tools
 
-## Curated city seeds (instant, ~600 famous restaurants across 60+ cities)
+## Curated city seeds (instant, ~830 famous restaurants across 100+ cities)
+
+### Wave 3 additions
+
+| File | New cities |
+|------|-----------|
+| `seed_usa_extra2.sql` | Philadelphia, Miami, Phoenix, San Diego, Orlando, Denver, Portland, Tampa |
+| `seed_europe_extra.sql` | Hamburg, Munich, Lyon, Marseille, Dublin, Edinburgh, Copenhagen, Oslo, Zurich, Lisbon, Athens |
+| `seed_oceania_extra.sql` | Brisbane, Perth, Adelaide, Auckland, Wellington |
+| `seed_gulf_extra.sql` | Dammam, Khobar, Al Ain, Ras Al Khaimah, Fujairah, Salalah, Abha, Taif |
+| `seed_pakistan_extra.sql` | Islamabad, Rawalpindi, Multan, Peshawar, Sialkot, Faisalabad, Quetta |
+| `seed_india_tier2.sql` | Patna, Kanpur, Indore, Nagpur, Surat, Mysore, Coimbatore, Mangalore, Vijayawada, Ranchi |
+| `seed_se_asia_extra.sql` | Penang, Johor Bahru, Surabaya, Bandung, Yogyakarta, Phnom Penh, Yangon |
+| `seed_africa_extra.sql` | Algiers, Khartoum, Dakar, Accra, Dar es Salaam, Mombasa, Kano, Abuja |
+| `seed_latam.sql` | Mexico City, Sao Paulo, Buenos Aires, Bogota, Santiago |
+| `dedupe.sql` | Cleanup script — preview/delete duplicates + recompute aggregates |
+
+### All files
 
 | File | City coverage | Count |
 |------|--------------|-------|
