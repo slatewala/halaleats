@@ -1,64 +1,60 @@
 # HalalEats Data Tools
 
-## 1. Seed famous Mumbai halal restaurants (instant, 30 records)
+## Curated city seeds (instant, ~280 famous restaurants)
 
-**Via phpMyAdmin:**
-- cPanel → phpMyAdmin → DB `reliscom_halaleats`
-- **Import** tab → upload `seed_mumbai.sql` → Go
-- Or **SQL** tab → paste contents → Go
+| File | City coverage | Count |
+|------|--------------|-------|
+| `seed_mumbai.sql` | Mumbai (60 restaurants — Bhendi Bazaar, Mohammed Ali Road, Bandra, Andheri, Kurla, Mumbra) | 60 |
+| `seed_india.sql` | Delhi, Hyderabad, Bengaluru, Lucknow, Kolkata | 60 |
+| `seed_uae.sql` | Dubai, Abu Dhabi, Sharjah | 36 |
+| `seed_uk_eu.sql` | London, Birmingham, Manchester, Paris | 40 |
+| `seed_namerica.sql` | NYC, NJ, Toronto, Chicago, Houston | 30 |
+| `seed_asia.sql` | Istanbul, KL, Singapore, Jakarta, Karachi, Lahore, Doha | 60 |
+| `seed_australia.sql` | Sydney, Melbourne, Cape Town, Johannesburg, Durban | 23 |
 
-**Via SSH:**
-```bash
-mysql -u reliscom_halaleats -p reliscom_halaleats < tools/seed_mumbai.sql
+### Run all at once (recommended)
+
+```
+https://reliablesoftwares.com/halaleats/tools/seed_all.php?token=YOUR_SEED_TOKEN
 ```
 
-Run once. No dedupe — re-running creates copies.
+Loops every `seed_*.sql` file in this dir. Token-gated.
 
-## 2. Live import from OpenStreetMap (Overpass API)
+### Run individual file via phpMyAdmin
 
-Pulls all restaurants tagged `diet:halal=yes/only/limited` in given city bbox.
+- cPanel → phpMyAdmin → DB `reliscom_halaleats`
+- **Import** tab → upload one `seed_*.sql` → Go
+- Or **SQL** tab → paste contents → Go
 
-**Requires:** `seed.token` file present (same one used for `seed.php`).
+### Run via SSH
+
+```bash
+mysql -u reliscom_halaleats -p reliscom_halaleats < tools/seed_mumbai.sql
+mysql -u reliscom_halaleats -p reliscom_halaleats < tools/seed_india.sql
+# ... etc
+```
+
+**Warning:** Re-running creates duplicates (no UNIQUE constraint). Run once per file.
+
+## Live OpenStreetMap import (Overpass API)
+
+Fetches all restaurants tagged `diet:halal=yes/only/limited` in given city bbox. Auto-dedupes.
 
 ```
 https://reliablesoftwares.com/halaleats/tools/import_overpass.php?token=YOUR_TOKEN&city=mumbai
 ```
 
-**Cities supported:**
-mumbai, delhi, hyderabad, bengaluru, dubai, abudhabi, london, istanbul, kl, singapore, jakarta, nyc, toronto, sydney
+**Cities:** mumbai, delhi, hyderabad, bengaluru, dubai, abudhabi, london, istanbul, kl, singapore, jakarta, nyc, toronto, sydney
 
-Auto-dedupes (same name + within 100m skipped).
-
-**Output:**
-```
-Importing halal restaurants in Mumbai (IN)...
-Overpass returned 142 elements.
-  + Bademiya  (18.922, 72.832)  full
-  + Persian Darbar  (18.961, 72.816)  full
-  ...
---- Summary ---
-Inserted:  87
-Skipped (no name/coord/dup): 55
-Errors:    0
-Done.
-```
-
-**Notes:**
-- Overpass API is free, public, rate-limited. Don't hammer.
-- Coverage depends on OSM contributors — Mumbai/UAE/UK well-mapped, smaller cities sparse.
-- Imported entries marked `status=approved`, `submitted_by=NULL`.
-
-## 3. Adding more cities
-
-Edit `import_overpass.php` `CITIES` constant. Format:
-```php
-'mycity' => ['CC', 'City Name', minLat, minLng, maxLat, maxLng],
-```
-Get bbox from https://boundingbox.klokantech.com/
-
-## 4. Cleanup after seeding
+## Cleanup after seeding
 
 ```bash
-rm tools/import_overpass.php tools/seed_mumbai.sql
+rm tools/seed_all.php tools/import_overpass.php tools/seed_*.sql
+rm seed.token
 ```
-Or leave behind `seed.token` removal (already covers access).
+
+Or delete `seed.token` only — that breaks all token-gated tools without removing them.
+
+## Adding more cities
+
+Create `tools/seed_<city>.sql` with same INSERT pattern. Master loader picks it up automatically.
