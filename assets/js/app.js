@@ -61,7 +61,8 @@ function navMount() {
   const wrap = document.getElementById('he-nav');
   if (!wrap) return;
   if (HE.user) {
-    wrap.innerHTML = `<a href="index.php">Map</a> <a href="submit.php">+ Add</a> <a href="leaderboard.php">Leaders</a> <a href="favorites.php">Saved</a> <a href="#" onclick="HE.logout();return false">Logout (${HE.user.name})</a>`;
+    const adminLink = HE.user.is_admin ? ` <a href="admin.php">🛡 Admin</a>` : '';
+    wrap.innerHTML = `<a href="index.php">Map</a> <a href="submit.php">+ Add</a> <a href="leaderboard.php">Leaders</a> <a href="favorites.php">Saved</a>${adminLink} <a href="#" onclick="HE.logout();return false">Logout (${HE.user.name})</a>`;
   } else {
     wrap.innerHTML = `<a href="index.php">Map</a> <a href="leaderboard.php">Leaders</a> <a href="login.php">Login</a> <a href="register.php">Sign up</a>`;
   }

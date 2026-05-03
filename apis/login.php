@@ -9,11 +9,12 @@ $account = trim($in['account'] ?? '');
 $password = $in['password'] ?? '';
 if (!$account || !$password) he_json(["success"=>0,"message"=>"account, password required"], 400);
 
-$stmt = $conn->prepare("SELECT userid, account, name, password, city, country, trust_score FROM he_users WHERE account=?");
+$stmt = $conn->prepare("SELECT userid, account, name, password, city, country, trust_score, is_admin, banned FROM he_users WHERE account=?");
 $stmt->bind_param("s", $account);
 $stmt->execute();
 $u = $stmt->get_result()->fetch_assoc();
 if (!$u || !password_verify($password, $u['password'])) he_json(["success"=>0,"message"=>"Invalid credentials"], 401);
+if ((int)$u['banned'] === 1) he_json(["success"=>0,"message"=>"Account banned"], 403);
 
 $conn->query("UPDATE he_users SET last_login=NOW() WHERE userid=".(int)$u['userid']);
 $token = he_make_token($u);

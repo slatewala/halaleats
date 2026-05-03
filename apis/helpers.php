@@ -22,11 +22,11 @@ function he_auth_user(mysqli $conn): ?array {
     $uid = (int)$uid;
     if ($uid <= 0) return null;
 
-    $stmt = $conn->prepare("SELECT userid, account, name, password FROM he_users WHERE userid=?");
+    $stmt = $conn->prepare("SELECT userid, account, name, password, is_admin, banned FROM he_users WHERE userid=?");
     $stmt->bind_param("i", $uid);
     $stmt->execute();
     $u = $stmt->get_result()->fetch_assoc();
-    if (!$u) return null;
+    if (!$u || (int)$u['banned'] === 1) return null;
 
     $expect = substr(hash('sha256', $u['userid'] . '|' . $u['password']), 0, 32);
     if (!hash_equals($expect, $hash)) return null;

@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS he_users (
   city VARCHAR(120) DEFAULT '',
   country VARCHAR(120) DEFAULT '',
   trust_score INT DEFAULT 0,
+  is_admin TINYINT(1) DEFAULT 0,
+  banned TINYINT(1) DEFAULT 0,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   last_login DATETIME NULL
 ) ENGINE=InnoDB;
