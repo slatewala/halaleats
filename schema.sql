@@ -1,6 +1,5 @@
 -- HalalEats schema
-CREATE DATABASE IF NOT EXISTS halaleats CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE halaleats;
+-- DB must pre-exist (created via cPanel/CLI). seed.php uses connected DB.
 
 CREATE TABLE IF NOT EXISTS he_users (
   userid INT AUTO_INCREMENT PRIMARY KEY,
