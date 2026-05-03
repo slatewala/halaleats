@@ -32,14 +32,33 @@ if (!$cols) {
     echo "Added banned column.\n";
 } else echo "banned column exists.\n";
 
-// Promote user
+// List all users (for diagnosis)
+echo "\n--- Registered users ---\n";
+$rs = $conn->query("SELECT userid, account, name, is_admin, created_at FROM he_users ORDER BY userid");
+$total = 0;
+while ($row = $rs->fetch_assoc()) {
+    $admin = (int)$row['is_admin'] === 1 ? ' [ADMIN]' : '';
+    echo "  #{$row['userid']}  {$row['account']}  ({$row['name']}){$admin}  {$row['created_at']}\n";
+    $total++;
+}
+echo "Total: $total user(s)\n\n";
+
+// Promote user (case-insensitive)
 $promote = $_GET['promote'] ?? $argv[1] ?? '';
 if ($promote) {
-    $stmt = $conn->prepare("UPDATE he_users SET is_admin=1 WHERE account=?");
+    $promote = trim($promote);
+    $stmt = $conn->prepare("SELECT userid, account, is_admin FROM he_users WHERE LOWER(account)=LOWER(?)");
     $stmt->bind_param("s", $promote);
     $stmt->execute();
-    if ($stmt->affected_rows > 0) echo "Promoted '$promote' to admin.\n";
-    else echo "User '$promote' not found (register first, then re-run).\n";
+    $u = $stmt->get_result()->fetch_assoc();
+    if (!$u) {
+        echo "User '$promote' not found. Check spelling against list above.\n";
+    } else {
+        $uid = (int)$u['userid'];
+        $conn->query("UPDATE he_users SET is_admin=1 WHERE userid=$uid");
+        $already = (int)$u['is_admin'] === 1 ? ' (was already admin)' : '';
+        echo "Promoted '{$u['account']}' (userid=$uid) to admin.$already\n";
+    }
 } else {
     echo "No promote=EMAIL passed. Migration only.\n";
 }
