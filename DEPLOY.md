@@ -54,16 +54,22 @@ chmod 644 db_connect.php
 
 ## 6. Run seed (once)
 
-Edit `seed.php` → change `SEED_TOKEN` to a random string, e.g. `'xK9mP2qL7nR4'`
+Generate random token + write to `seed.token` (gitignored, web-blocked):
+
+```bash
+openssl rand -hex 24 > seed.token
+chmod 600 seed.token
+cat seed.token   # copy this value
+```
 
 Visit:
 ```
-https://reliablesoftwares.com/halaleats/seed.php?token=xK9mP2qL7nR4
+https://reliablesoftwares.com/halaleats/seed.php?token=PASTE_TOKEN_HERE
 ```
 
 Expect: "Seeded 8 sample restaurants. Done."
 
-**Then delete seed.php** or leave token mismatched.
+**Then delete `seed.php` and `seed.token`** from server.
 
 ## 7. Verify
 
@@ -80,10 +86,10 @@ Expect: "Seeded 8 sample restaurants. Done."
 
 ## 9. Hardening checklist
 
-- [x] `seed.php` token-gated
-- [x] `.htaccess` blocks `.sql .md .env .example.php`
-- [x] `db_connect.php` not in repo
-- [ ] After seed: `rm seed.php` from server
+- [x] `seed.php` token-gated via external `seed.token` file
+- [x] `.htaccess` blocks `.sql .md .env .example.php .token`
+- [x] `db_connect.php` and `seed.token` not in repo
+- [ ] After seed: `rm seed.php seed.token` from server
 - [ ] cPanel → set PHP `display_errors = Off`
 - [ ] Cron: nightly `mysqldump reliscom_halaleats > backups/halaleats_$(date +%F).sql`
 

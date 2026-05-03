@@ -5,8 +5,8 @@ Community-verified halal restaurant map. PHP + MySQL + Leaflet/OSM.
 ## Setup
 
 1. Create MySQL DB. `cp db_connect.example.php db_connect.php`, edit creds.
-2. Edit `seed.php` → set `SEED_TOKEN` to random string.
-3. Visit `/seed.php?token=YOUR_TOKEN` once — creates tables + sample data, then delete file.
+2. Generate seed token: `openssl rand -hex 24 > seed.token`
+3. Visit `/seed.php?token=$(cat seed.token)` once — creates tables + sample data, then delete `seed.php` and `seed.token`.
 4. Open `/index.php`.
 
 **Live deployment to `reliablesoftwares.com/halaleats/`** → see [DEPLOY.md](DEPLOY.md)

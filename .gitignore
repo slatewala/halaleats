@@ -1,6 +1,7 @@
 uploads/*
 !uploads/.gitkeep
 /db_connect.php
+/seed.token
 *.log
 .DS_Store
 vendor/

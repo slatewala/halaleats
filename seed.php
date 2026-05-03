@@ -1,13 +1,17 @@
 <?php
 declare(strict_types=1);
-// Run once: php seed.php  (CLI) OR visit /seed.php?token=SETUP_SECRET
-// CHANGE THIS TOKEN before deploying, then delete seed.php after first run.
-const SEED_TOKEN = 'CHANGE_ME_BEFORE_DEPLOY';
+// Run once: php seed.php  (CLI) OR visit /seed.php?token=YOUR_TOKEN
+// Token loaded from seed.token (gitignored). Generate via:
+//   openssl rand -hex 24 > seed.token
+// Delete seed.php after first run.
+
+$tokenFile = __DIR__ . '/seed.token';
+$SEED_TOKEN = is_readable($tokenFile) ? trim(file_get_contents($tokenFile)) : '';
 
 if (PHP_SAPI !== 'cli') {
-    if (($_GET['token'] ?? '') !== SEED_TOKEN || SEED_TOKEN === 'CHANGE_ME_BEFORE_DEPLOY') {
+    if (!$SEED_TOKEN || ($_GET['token'] ?? '') !== $SEED_TOKEN) {
         http_response_code(403);
-        exit("Forbidden. Set SEED_TOKEN constant and pass ?token= to run.");
+        exit("Forbidden. Create seed.token file with random secret and pass ?token=<secret>.");
     }
     header('Content-Type: text/plain');
 }
