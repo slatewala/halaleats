@@ -1,15 +1,22 @@
 # HalalEats Data Tools
 
-## Curated city seeds (instant, ~280 famous restaurants)
+## Curated city seeds (instant, ~600 famous restaurants across 60+ cities)
 
 | File | City coverage | Count |
 |------|--------------|-------|
-| `seed_mumbai.sql` | Mumbai (60 restaurants — Bhendi Bazaar, Mohammed Ali Road, Bandra, Andheri, Kurla, Mumbra) | 60 |
+| `seed_mumbai.sql` | Mumbai (60) | 60 |
 | `seed_india.sql` | Delhi, Hyderabad, Bengaluru, Lucknow, Kolkata | 60 |
+| `seed_india_extra.sql` | Aligarh, Aurangabad, Bhopal, Srinagar, Kochi, Kozhikode, Chennai, Pune, Ahmedabad, Jaipur, Varanasi | 38 |
 | `seed_uae.sql` | Dubai, Abu Dhabi, Sharjah | 36 |
+| `seed_middle_east.sql` | Riyadh, Jeddah, Mecca, Medina, Kuwait, Manama, Muscat, Amman, Beirut, Baghdad, Tehran | 50 |
 | `seed_uk_eu.sql` | London, Birmingham, Manchester, Paris | 40 |
+| `seed_uk_extra.sql` | Leicester, Bradford, Glasgow, Leeds, Cardiff, Liverpool | 22 |
+| `seed_europe.sql` | Berlin, Frankfurt, Amsterdam, Brussels, Vienna, Stockholm, Madrid, Barcelona, Rome, Milan, Geneva, Moscow | 38 |
 | `seed_namerica.sql` | NYC, NJ, Toronto, Chicago, Houston | 30 |
+| `seed_usa_extra.sql` | LA, San Francisco, Detroit/Dearborn, DC, Boston, Atlanta, Dallas, Seattle, Minneapolis | 35 |
 | `seed_asia.sql` | Istanbul, KL, Singapore, Jakarta, Karachi, Lahore, Doha | 60 |
+| `seed_east_asia.sql` | Tokyo, Osaka, Kyoto, Seoul, Beijing, Shanghai, Xi'an, Bangkok, HCMC, Manila, Dhaka, Colombo | 47 |
+| `seed_africa.sql` | Cairo, Alexandria, Casablanca, Marrakech, Fes, Tunis, Lagos, Nairobi, Addis Ababa | 36 |
 | `seed_australia.sql` | Sydney, Melbourne, Cape Town, Johannesburg, Durban | 23 |
 
 ### Run all at once (recommended)
