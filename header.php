@@ -7,6 +7,7 @@ if (PHP_VERSION_ID < 80000) {
 }
 
 $page_title = $page_title ?? 'HalalEats — Find verified halal food near you';
+$asset_v = '1.1.1';
 ?><!doctype html>
 <html lang="en">
 <head>
@@ -18,9 +19,9 @@ $page_title = $page_title ?? 'HalalEats — Find verified halal food near you';
 <meta property="og:description" content="Find community-verified halal restaurants near you.">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=<?= $asset_v ?>">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
-<script src="assets/js/app.js" defer></script>
+<script src="assets/js/app.v2.js?v=<?= $asset_v ?>" defer></script>
 </head>
 <body>
 <header class="he-header">
