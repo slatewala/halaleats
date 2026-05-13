@@ -7,7 +7,7 @@ if (PHP_VERSION_ID < 80000) {
 }
 
 $page_title = $page_title ?? 'HalalEats — Find verified halal food near you';
-$asset_v = '1.1.1';
+$asset_v = '1.6.0';
 ?><!doctype html>
 <html lang="en">
 <head>

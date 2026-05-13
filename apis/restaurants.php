@@ -10,11 +10,12 @@ $action = $in['action'] ?? 'list';
 if ($action === 'list') {
     $lat = isset($in['lat']) ? (float)$in['lat'] : null;
     $lng = isset($in['lng']) ? (float)$in['lng'] : null;
-    $radius = max(1, min(200, (float)($in['radius'] ?? 25)));
+    $radius = max(1, min(500, (float)($in['radius'] ?? 25)));
     $halal = $in['halal'] ?? '';
     $cuisine = trim($in['cuisine'] ?? '');
     $q = trim($in['q'] ?? '');
-    $limit = max(1, min(200, (int)($in['limit'] ?? 100)));
+    $cityFilter = trim($in['city'] ?? '');
+    $limit = max(1, min(500, (int)($in['limit'] ?? 100)));
 
     $where = ["status='approved'"];
     $params = []; $types = '';
@@ -24,6 +25,9 @@ if ($action === 'list') {
     }
     if ($cuisine) {
         $where[] = "cuisine LIKE ?"; $types .= 's'; $params[] = "%$cuisine%";
+    }
+    if ($cityFilter) {
+        $where[] = "city=?"; $types .= 's'; $params[] = $cityFilter;
     }
     if ($q) {
         $where[] = "(name LIKE ? OR address LIKE ? OR city LIKE ?)"; $types .= 'sss';
@@ -36,7 +40,10 @@ if ($action === 'list') {
 
     if ($lat !== null && $lng !== null) {
         $distExpr = ", " . he_haversine_sql($lat, $lng) . " AS distance_km";
-        $where[] = he_haversine_sql($lat, $lng) . " < $radius";
+        // city filter overrides radius restriction
+        if (!$cityFilter) {
+            $where[] = he_haversine_sql($lat, $lng) . " < $radius";
+        }
         $order = "distance_km ASC";
     }
 
